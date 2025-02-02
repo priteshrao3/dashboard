@@ -1,17 +1,29 @@
 'use client';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 const UploadTemplate = () => {
-  const [keyProtect, setKeyProtect] = useState(localStorage.getItem("key_protect") || "");
-  const [template, setTemplate] = useState("");
-  const [responseMessage, setResponseMessage] = useState("");
-  const [messageClass, setMessageClass] = useState("");
+  const [keyProtect, setKeyProtect] = useState('');
+  const [template, setTemplate] = useState('');
+  const [responseMessage, setResponseMessage] = useState('');
+  const [messageClass, setMessageClass] = useState('');
+
+  // This effect ensures localStorage is only accessed on the client side
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedKeyProtect = localStorage.getItem("key_protect");
+      if (storedKeyProtect) {
+        setKeyProtect(storedKeyProtect);
+      }
+    }
+  }, []);
 
   const handleKeyProtectChange = (e) => {
     const value = e.target.value;
     setKeyProtect(value);
-    localStorage.setItem("key_protect", value);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("key_protect", value);  // Store value in localStorage
+    }
   };
 
   const handleSubmit = async (e) => {
