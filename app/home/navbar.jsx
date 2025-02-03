@@ -17,6 +17,13 @@ function NavigationBar() {
                   <a href="/" className="text-lg hover:text-gray-200 transition-colors duration-300">Home</a>
                 </li>
                 <li>
+                  <a href="subjectlines" className="text-lg hover:text-gray-200 transition-colors duration-300">Subjects</a>
+                </li>
+
+                <li>
+                  <a href="templatesall" className="text-lg hover:text-gray-200 transition-colors duration-300">Templates</a>
+                </li>
+                <li>
                   <a href="#" className="text-lg hover:text-gray-200 transition-colors duration-300">About</a>
                 </li>
                 <li>
