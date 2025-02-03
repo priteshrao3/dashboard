@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaEdit, FaSave, FaSearch } from 'react-icons/fa';
-import { Button } from 'antd'; // Import Ant Design Button
+import { Button } from 'antd';
+import UploadTemplate from '../home/uploadtemplate';
 
 const TemplatesPage = () => {
   const [searchKey, setSearchKey] = useState('');
@@ -58,7 +59,6 @@ const TemplatesPage = () => {
     }
   };
 
-  // Function to dynamically resize the textarea
   const handleTextareaResize = (e) => {
     e.target.style.height = 'auto';
     e.target.style.height = `${e.target.scrollHeight}px`;
@@ -69,63 +69,76 @@ const TemplatesPage = () => {
   const currentItems = templates.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
-    <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-lg p-8 mt-10">
-      <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Manage Email Templates</h1>
-      <div className="flex gap-4 mb-6">
+    <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-lg p-2 md:p-8 mt-6">
+      <h1 className="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-4 md:mb-6">
+        Manage Email Templates
+      </h1>
+
+      <UploadTemplate />
+
+      <div className="flex flex-col sm:flex-row items-center gap-3 mb-6 mt-4">
         <input
           type="text"
           value={searchKey}
           onChange={(e) => setSearchKey(e.target.value)}
           placeholder="Enter Key Protect"
-          className="w-full p-3 border border-gray-300 text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full sm:w-auto flex-1 p-2 md:p-3 border border-gray-300 text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <Button
           onClick={fetchTemplates}
           type="primary"
           icon={<FaSearch />}
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 w-full sm:w-auto"
         >
           Search
         </Button>
       </div>
+
       {message && <div className="text-center text-red-600 font-semibold mb-4">{message}</div>}
-      <ul className="mt-6 space-y-4">
+
+      <ul className="mt-4 space-y-3">
         {currentItems.map((template) => (
-          <li key={template.id} className="p-4 border rounded-lg shadow-md flex justify-between items-center bg-gray-50">
+          <li
+            key={template.id}
+            className="p-3 md:p-4 border rounded-lg shadow-md flex flex-col sm:flex-row justify-between items-start sm:items-center bg-gray-50"
+          >
             {editingTemplate === template.id ? (
               <textarea
                 value={updatedTemplate}
                 onChange={(e) => setUpdatedTemplate(e.target.value)}
                 onInput={handleTextareaResize}
-                className="border p-5 h-[25em] text-black rounded-md w-full mr-2 resize-none"
-                rows={1} // Starts with a single row but expands as needed
+                className="border p-2 md:p-3 text-black rounded-md w-full resize-none"
+                rows={25}
               />
             ) : (
-              <span className="text-black font-medium">{template.template}</span>
+              <span className="text-black font-medium w-full">{template.template}</span>
             )}
-            {editingTemplate === template.id ? (
-              <Button
-                onClick={() => handleUpdate(template.id)}
-                type="primary"
-                icon={<FaSave />}
-                className="ml-4"
-              >
-                Save
-              </Button>
-            ) : (
-              <Button
-                onClick={() => handleEdit(template)}
-                type="default"
-                icon={<FaEdit />}
-                className="ml-4"
-              >
-                Edit
-              </Button>
-            )}
+            <div className="flex gap-2 mt-2 sm:mt-0">
+              {editingTemplate === template.id ? (
+                <Button
+                  onClick={() => handleUpdate(template.id)}
+                  type="primary"
+                  icon={<FaSave />}
+                  className="w-full sm:w-auto"
+                >
+                  Save
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => handleEdit(template)}
+                  type="default"
+                  icon={<FaEdit />}
+                  className="w-full sm:w-auto"
+                >
+                  Edit
+                </Button>
+              )}
+            </div>
           </li>
         ))}
       </ul>
-      <div className="flex justify-center mt-6 space-x-4">
+
+      <div className="flex justify-center mt-5 space-x-3">
         <Button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}

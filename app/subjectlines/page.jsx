@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaEdit, FaSave, FaSearch } from 'react-icons/fa';
-import { Button } from 'antd'; // Import Ant Design Button
+import { Button } from 'antd'; 
+import UploadSubject from '../home/uploadsubjects';
 
 const SubjectLinePage = () => {
   const [searchKey, setSearchKey] = useState('');
@@ -63,9 +64,12 @@ const SubjectLinePage = () => {
   const currentItems = subjects.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
-    <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-lg p-8 mt-10">
+    <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-lg md:p-8 p-2 md:mt-10">
       <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Manage Subject Lines</h1>
-      <div className="flex gap-4 mb-6">
+
+      <UploadSubject />
+
+      <div className="flex gap-4 mb-6 mt-5">
         <input
           type="text"
           value={searchKey}
