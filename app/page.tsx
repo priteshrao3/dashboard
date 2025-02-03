@@ -1,4 +1,3 @@
-import NavigationBar from './home/navbar.jsx';
 import UploadTemplate from './home/uploadtemplate.jsx';
 import UploadSubject from './home/uploadsubjects.jsx';
 
