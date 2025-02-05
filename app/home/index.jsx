@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaWallet } from "react-icons/fa";
 import axios from "axios";
 
@@ -11,6 +11,16 @@ function IndexPage() {
     const [errorMessage, setErrorMessage] = useState("");
     const [loading, setLoading] = useState(false);
 
+    // Extract token from URL and store it in localStorage
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get("token");
+
+        if (token) {
+            localStorage.setItem("authToken", token);
+            console.log("Token saved:", token);
+        }
+    }, []);
 
     const steps = [
         {
@@ -29,7 +39,6 @@ function IndexPage() {
             description: "After purchase, we start working—just wait for the best results.",
         },
     ];
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -58,6 +67,7 @@ function IndexPage() {
             setLoading(false);
         }
     };
+
 
     return (
         <div className="bg-gray-50">

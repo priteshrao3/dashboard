@@ -146,15 +146,7 @@ class MailBlaster(QWidget):
         url = f"{self.website_url}?token={self.user_token}"
         webbrowser.open(url)
 
-        # Open the file in Firefox using the exact path
-        file_url = f"file://{os.path.abspath(temp_file)}"
-        firefox_path = "/usr/bin/firefox"
-        
-        try:
-            # Using subprocess to open the file in Firefox directly
-            subprocess.run([firefox_path, file_url])
-        except Exception as e:
-            QMessageBox.critical(self, "Error", f"Could not open Firefox: {e}")
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

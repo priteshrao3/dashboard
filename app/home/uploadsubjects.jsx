@@ -4,27 +4,22 @@ import axios from 'axios';
 
 const UploadSubject = () => {
   const [keyProtect, setKeyProtect] = useState('');
+  const [authToken, setAuthToken] = useState('');
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState('');
   const [messageClass, setMessageClass] = useState('');
 
-  // This effect ensures localStorage is only accessed on the client side
+  // Fetch stored values from localStorage and set keyProtect internally
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const storedKeyProtect = localStorage.getItem("key_protect");
-      if (storedKeyProtect) {
-        setKeyProtect(storedKeyProtect);
+      const storedAuthToken = localStorage.getItem("authToken"); // Get authToken
+
+      if (storedAuthToken) {
+        setAuthToken(storedAuthToken);
+        setKeyProtect(storedAuthToken); // Auto-fill keyProtect with authToken
       }
     }
   }, []);
-
-  const handleKeyProtectChange = (e) => {
-    const value = e.target.value;
-    setKeyProtect(value);
-    if (typeof window !== "undefined") {
-      localStorage.setItem("key_protect", value);  // Store value in localStorage
-    }
-  };
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -67,7 +62,7 @@ const UploadSubject = () => {
           {
             headers: {
               'Content-Type': 'application/json',
-              Authorization: `Bearer ${keyProtect}`,
+              Authorization: `Bearer ${authToken}`, // Use authToken
             },
           }
         );
@@ -93,14 +88,7 @@ const UploadSubject = () => {
       <h1 className="md:text-4xl text-2xl font-semibold text-black text-center mb-6">Upload Subject Line CSV</h1>
       
       <form onSubmit={handleSubmit} className="p-6 rounded-lg shadow-md">
-        <input
-          type="text"
-          value={keyProtect}
-          onChange={handleKeyProtectChange}
-          placeholder="Enter Key Protect"
-          className="w-full text-black p-3 mb-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-
+        {/* The keyProtect field is now handled internally and not shown */}
         <input
           type="file"
           accept=".csv"

@@ -2,12 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FaEdit, FaSave, FaSearch } from 'react-icons/fa';
+import { FaEdit, FaSave } from 'react-icons/fa';
 import { Button } from 'antd'; 
 import UploadSubject from '../home/uploadsubjects';
 
 const SubjectLinePage = () => {
-  const [searchKey, setSearchKey] = useState('');
+  const [authToken, setAuthToken] = useState('');
   const [subjects, setSubjects] = useState([]);
   const [editingSubject, setEditingSubject] = useState(null);
   const [updatedText, setUpdatedText] = useState('');
@@ -16,22 +16,20 @@ const SubjectLinePage = () => {
   const itemsPerPage = 20;
 
   useEffect(() => {
-    const storedKey = localStorage.getItem('searchKey');
-    if (storedKey) {
-      setSearchKey(storedKey);
+    if (typeof window !== "undefined") {
+      const storedAuthToken = localStorage.getItem('authToken');
+      if (storedAuthToken) {
+        setAuthToken(storedAuthToken);
+        fetchSubjects(storedAuthToken);
+      }
     }
   }, []);
 
-  const fetchSubjects = async () => {
-    if (!searchKey.trim()) {
-      setMessage('Enter a Key Protect to search.');
-      return;
-    }
-    setMessage('Searching...');
-    localStorage.setItem('searchKey', searchKey);
+  const fetchSubjects = async (token) => {
+    setMessage('Fetching subjects...');
     try {
       const response = await axios.get(
-        `https://automationdg.pythonanywhere.com/apis/subject-line/?key_protect=${searchKey}`
+        `https://automationdg.pythonanywhere.com/apis/subject-line/?key_protect=${token}`
       );
       setSubjects(response.data);
       setMessage(response.data.length ? '' : 'No subject lines found.');
@@ -50,10 +48,10 @@ const SubjectLinePage = () => {
     try {
       await axios.put(`https://automationdg.pythonanywhere.com/apis/subject-line/${id}/`, {
         subject: updatedText,
-        key_protect: searchKey,
+        key_protect: authToken,
       });
       setEditingSubject(null);
-      fetchSubjects();
+      fetchSubjects(authToken);
     } catch (error) {
       setMessage('Failed to update subject.');
     }
@@ -66,26 +64,7 @@ const SubjectLinePage = () => {
   return (
     <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-lg md:p-8 p-2 md:mt-10">
       <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Manage Subject Lines</h1>
-
       <UploadSubject />
-
-      <div className="flex gap-4 mb-6 mt-5">
-        <input
-          type="text"
-          value={searchKey}
-          onChange={(e) => setSearchKey(e.target.value)}
-          placeholder="Enter Key Protect"
-          className="w-full p-3 border border-gray-300 text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <Button
-          onClick={fetchSubjects}
-          type="primary"
-          icon={<FaSearch />}
-          className="flex items-center gap-2"
-        >
-          Search
-        </Button>
-      </div>
       {message && <div className="text-center text-red-600 font-semibold mb-4">{message}</div>}
       <ul className="mt-6 space-y-4">
         {currentItems.map((subject) => (

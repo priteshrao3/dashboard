@@ -4,27 +4,21 @@ import axios from "axios";
 
 const UploadTemplate = () => {
   const [keyProtect, setKeyProtect] = useState('');
+  const [authToken, setAuthToken] = useState('');
   const [template, setTemplate] = useState('');
   const [responseMessage, setResponseMessage] = useState('');
   const [messageClass, setMessageClass] = useState('');
 
-  // This effect ensures localStorage is only accessed on the client side
+  // Fetch stored values from localStorage
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const storedKeyProtect = localStorage.getItem("key_protect");
-      if (storedKeyProtect) {
-        setKeyProtect(storedKeyProtect);
+      const storedAuthToken = localStorage.getItem("authToken"); // Get authToken
+      if (storedAuthToken) {
+        setAuthToken(storedAuthToken);
+        setKeyProtect(storedAuthToken); // Auto-fill keyProtect with authToken
       }
     }
   }, []);
-
-  const handleKeyProtectChange = (e) => {
-    const value = e.target.value;
-    setKeyProtect(value);
-    if (typeof window !== "undefined") {
-      localStorage.setItem("key_protect", value);  // Store value in localStorage
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,7 +44,7 @@ const UploadTemplate = () => {
         { template, key_protect: keyProtect }, // Include key_protect in request body
         {
           headers: {
-            Authorization: `Bearer ${keyProtect}`,
+            Authorization: `Bearer ${authToken}`, // Use authToken for Authorization
           },
         }
       );
@@ -76,14 +70,7 @@ const UploadTemplate = () => {
       </h1>
 
       <form onSubmit={handleSubmit} className="text-black p-6 rounded-lg shadow-md">
-        <input
-          type="text"
-          value={keyProtect}
-          onChange={handleKeyProtectChange}
-          placeholder="Enter Key Protect"
-          className="w-full p-3 mb-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-
+        {/* The keyProtect field is now handled internally and hidden */}
         <textarea
           name="template"
           value={template}

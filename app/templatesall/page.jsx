@@ -2,12 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { FaEdit, FaSave, FaSearch } from 'react-icons/fa';
+import { FaEdit, FaSave } from 'react-icons/fa';
 import { Button } from 'antd';
 import UploadTemplate from '../home/uploadtemplate';
 
 const TemplatesPage = () => {
-  const [searchKey, setSearchKey] = useState('');
+  const [authToken, setAuthToken] = useState('');
   const [templates, setTemplates] = useState([]);
   const [editingTemplate, setEditingTemplate] = useState(null);
   const [updatedTemplate, setUpdatedTemplate] = useState('');
@@ -16,22 +16,20 @@ const TemplatesPage = () => {
   const itemsPerPage = 20;
 
   useEffect(() => {
-    const storedKey = localStorage.getItem('searchKey');
-    if (storedKey) {
-      setSearchKey(storedKey);
+    if (typeof window !== 'undefined') {
+      const storedAuthToken = localStorage.getItem('authToken');
+      if (storedAuthToken) {
+        setAuthToken(storedAuthToken);
+        fetchTemplates(storedAuthToken);
+      }
     }
   }, []);
 
-  const fetchTemplates = async () => {
-    if (!searchKey.trim()) {
-      setMessage('Enter a Key Protect to search.');
-      return;
-    }
-    setMessage('Searching...');
-    localStorage.setItem('searchKey', searchKey);
+  const fetchTemplates = async (key) => {
+    setMessage('Fetching templates...');
     try {
       const response = await axios.get(
-        `https://automationdg.pythonanywhere.com/apis/templates/?key_protect=${searchKey}`
+        `https://automationdg.pythonanywhere.com/apis/templates/?key_protect=${key}`
       );
       setTemplates(response.data);
       setMessage(response.data.length ? '' : 'No templates found.');
@@ -50,18 +48,13 @@ const TemplatesPage = () => {
     try {
       await axios.put(`https://automationdg.pythonanywhere.com/apis/templates/${id}/`, {
         template: updatedTemplate,
-        key_protect: searchKey,
+        key_protect: authToken,
       });
       setEditingTemplate(null);
-      fetchTemplates();
+      fetchTemplates(authToken);
     } catch (error) {
       setMessage('Failed to update template.');
     }
-  };
-
-  const handleTextareaResize = (e) => {
-    e.target.style.height = 'auto';
-    e.target.style.height = `${e.target.scrollHeight}px`;
   };
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -76,24 +69,6 @@ const TemplatesPage = () => {
 
       <UploadTemplate />
 
-      <div className="flex flex-col sm:flex-row items-center gap-3 mb-6 mt-4">
-        <input
-          type="text"
-          value={searchKey}
-          onChange={(e) => setSearchKey(e.target.value)}
-          placeholder="Enter Key Protect"
-          className="w-full sm:w-auto flex-1 p-2 md:p-3 border border-gray-300 text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <Button
-          onClick={fetchTemplates}
-          type="primary"
-          icon={<FaSearch />}
-          className="flex items-center gap-2 w-full sm:w-auto"
-        >
-          Search
-        </Button>
-      </div>
-
       {message && <div className="text-center text-red-600 font-semibold mb-4">{message}</div>}
 
       <ul className="mt-4 space-y-3">
@@ -106,30 +81,19 @@ const TemplatesPage = () => {
               <textarea
                 value={updatedTemplate}
                 onChange={(e) => setUpdatedTemplate(e.target.value)}
-                onInput={handleTextareaResize}
                 className="border p-2 md:p-3 text-black rounded-md w-full resize-none"
-                rows={25}
+                rows={5}
               />
             ) : (
               <span className="text-black font-medium w-full">{template.template}</span>
             )}
             <div className="flex gap-2 mt-2 sm:mt-0">
               {editingTemplate === template.id ? (
-                <Button
-                  onClick={() => handleUpdate(template.id)}
-                  type="primary"
-                  icon={<FaSave />}
-                  className="w-full sm:w-auto"
-                >
+                <Button onClick={() => handleUpdate(template.id)} type="primary" icon={<FaSave />}>
                   Save
                 </Button>
               ) : (
-                <Button
-                  onClick={() => handleEdit(template)}
-                  type="default"
-                  icon={<FaEdit />}
-                  className="w-full sm:w-auto"
-                >
+                <Button onClick={() => handleEdit(template)} type="default" icon={<FaEdit />}>
                   Edit
                 </Button>
               )}
