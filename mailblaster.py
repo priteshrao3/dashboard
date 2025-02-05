@@ -88,7 +88,7 @@ class MailBlaster(QWidget):
         self.selenium_button.setStyleSheet("background-color: #27AE60; color: white; padding: 10px; font-weight: bold; border-radius: 5px;")
 
         
-        self.open_website_button = QPushButton("Go to Website & Send Token")
+        self.open_website_button = QPushButton("Go to Dashboard")
         self.open_website_button.clicked.connect(self.open_website)
         self.open_website_button.setStyleSheet("background-color: #8E44AD; color: white; padding: 10px; font-weight: bold; border-radius: 5px;")
         
