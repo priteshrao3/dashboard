@@ -1,4 +1,5 @@
 'use client'
+import Image from 'next/image';
 import React, { useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 
@@ -16,8 +17,13 @@ function NavigationBar() {
             </button>
           </div>
           <div>
-            <a href="/" className="md:text-3xl text-xl font-bold hover:text-gray-500 transition-all duration-300">
-              Email Blaster
+            <a href="/" className="font-bold hover:text-gray-500 transition-all duration-300 flex items-center">
+              <Image
+                src="/logo.png"
+                alt="Logo"
+                width={150}
+                height={50}
+              />
             </a>
           </div>
           {/* Desktop Menu */}

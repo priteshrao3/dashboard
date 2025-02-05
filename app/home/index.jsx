@@ -1,28 +1,15 @@
 'use client'
 import React, { useState } from 'react';
 import { FaWallet } from "react-icons/fa";
+import axios from "axios";
 
 function IndexPage() {
-    const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
-    const [mobileNumber, setMobileNumber] = useState('');
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [mobileNumber, setMobileNumber] = useState("");
     const [isSubscribed, setIsSubscribed] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        if (!email || !name || !mobileNumber) {
-            setErrorMessage('Please fill in all the fields.');
-            return;
-        }
-
-        setIsSubscribed(true);
-        setErrorMessage('');
-        setEmail('');
-        setName('');
-        setMobileNumber('');
-    };
+    const [errorMessage, setErrorMessage] = useState("");
+    const [loading, setLoading] = useState(false);
 
 
     const steps = [
@@ -43,6 +30,35 @@ function IndexPage() {
         },
     ];
 
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setErrorMessage("");
+
+        try {
+            const response = await axios.post("https://automationdg.pythonanywhere.com/apis/subscriptions/", {
+                name: name,
+                email: email,
+                phone: mobileNumber,
+            });
+
+            if (response.status === 201) {
+                setIsSubscribed(true);
+                setName(""); // Reset form
+                setEmail("");
+                setMobileNumber("");
+            } else {
+                throw new Error("Subscription failed. Please try again.");
+            }
+
+        } catch (error) {
+            setErrorMessage(error.response?.data?.message || "An error occurred. Please try again.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div className="bg-gray-50">
             <section className="relative overflow-hidden bg-gradient-to-r from-blue-500 to-indigo-600 py-20 text-white">
@@ -59,7 +75,7 @@ function IndexPage() {
                             </p>
                             <div className="mt-6">
                                 <a
-                                    href="https://demo.royalscripts.com/smm_king"
+                                    href="https://prwebtechno.vercel.app/contact"
                                     className="inline-flex items-center px-8 py-4 bg-white text-blue-600 font-bold rounded-full shadow-lg hover:bg-gray-200 transition-all duration-300 transform hover:scale-105"
                                 >
                                     Get Started
@@ -73,7 +89,7 @@ function IndexPage() {
                         {/* Right Image */}
                         <div className="md:w-1/2 mt-10 md:mt-0 flex justify-center">
                             <img
-                                src="https://product.geniusocean.com/smm-pro/assets/images/7585939381655876695.png"
+                                src="/banner.png"
                                 alt="banner"
                                 className="w-3/4 md:w-2/3 h-auto drop-shadow-xl transition-transform duration-500 hover:scale-105"
                             />
@@ -113,7 +129,7 @@ function IndexPage() {
                             🚀 Get started for **free** today. **No credit card required!**
                         </p>
                         <div className="flex justify-center md:justify-start">
-                            <button className="bg-blue-600 text-white font-semibold px-8 py-3 rounded-full shadow-md hover:bg-blue-700 hover:scale-105 transition-all duration-300">
+                            <button onClick={() => window.location.href = "https://prwebtechno.vercel.app/contact"} className="bg-blue-600 text-white font-semibold px-8 py-3 rounded-full shadow-md hover:bg-blue-700 hover:scale-105 transition-all duration-300">
                                 Start Free Trial
                             </button>
                         </div>
@@ -170,41 +186,37 @@ function IndexPage() {
                     </p>
 
                     <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {/* Card 1: Adding Templates */}
+
                         <div className="p-8 bg-white rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 border">
-                            <h3 className="text-2xl font-semibold text-gray-900">Add Templates</h3>
-                            <p className="mt-4 text-gray-700">Choose from professionally designed templates or create your own with our intuitive editor.</p>
+                            <h3 className="text-2xl font-semibold text-gray-900">Get a Subscription</h3>
+                            <p className="mt-4 text-gray-700">Subscribe to unlock premium features and supercharge your marketing.</p>
                         </div>
 
-                        {/* Card 2: Adding Subject Line */}
-                        <div className="p-8 bg-white rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 border">
-                            <h3 className="text-2xl font-semibold text-gray-900">Add Subject Line</h3>
-                            <p className="mt-4 text-gray-700">Craft the perfect subject line to capture attention and increase open rates.</p>
-                        </div>
-
-                        {/* Card 3: Arrange Email Credentials in CSV */}
-                        <div className="p-8 bg-white rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 border">
-                            <h3 className="text-2xl font-semibold text-gray-900">Arrange Email Credentials</h3>
-                            <p className="mt-4 text-gray-700">Upload your email credentials via CSV for seamless integration.</p>
-                        </div>
-
-                        {/* Card 4: Arrange Client Email IDs in CSV */}
-                        <div className="p-8 bg-white rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 border">
-                            <h3 className="text-2xl font-semibold text-gray-900">Upload Client Emails</h3>
-                            <p className="mt-4 text-gray-700">Organize client email IDs in CSV format for effective segmentation.</p>
-                        </div>
-
-                        {/* Card 5: Install and Use Software */}
                         <div className="p-8 bg-white rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 border">
                             <h3 className="text-2xl font-semibold text-gray-900">Install & Get Started</h3>
                             <p className="mt-4 text-gray-700">Easily install MailBlaster and follow a simple setup process.</p>
                         </div>
 
-                        {/* Card 6: How to Get Subscription */}
                         <div className="p-8 bg-white rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 border">
-                            <h3 className="text-2xl font-semibold text-gray-900">Get a Subscription</h3>
-                            <p className="mt-4 text-gray-700">Subscribe to unlock premium features and supercharge your marketing.</p>
+                            <h3 className="text-2xl font-semibold text-gray-900">Add Templates</h3>
+                            <p className="mt-4 text-gray-700">Choose from professionally designed templates or create your own with our intuitive editor.</p>
                         </div>
+
+                        <div className="p-8 bg-white rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 border">
+                            <h3 className="text-2xl font-semibold text-gray-900">Add Subject Line</h3>
+                            <p className="mt-4 text-gray-700">Craft the perfect subject line to capture attention and increase open rates.</p>
+                        </div>
+
+                        <div className="p-8 bg-white rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 border">
+                            <h3 className="text-2xl font-semibold text-gray-900">Arrange Email Credentials</h3>
+                            <p className="mt-4 text-gray-700">Upload your email credentials via CSV for seamless integration.</p>
+                        </div>
+
+                        <div className="p-8 bg-white rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 border">
+                            <h3 className="text-2xl font-semibold text-gray-900">Upload Client Emails</h3>
+                            <p className="mt-4 text-gray-700">Organize client email IDs in CSV format for effective segmentation.</p>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -237,7 +249,7 @@ function IndexPage() {
                                 to send bulk emails, personalize content, track engagement, and improve marketing efficiency—all
                                 without any coding skills!
                             </p>
-                            <a href="https://demo.royalscripts.com/smm_king"
+                            <a href="https://prwebtechno.vercel.app/contact"
                                 className="inline-flex items-center px-8 py-4 bg-blue-600 text-white font-bold rounded-full shadow-lg 
                                hover:bg-blue-700 hover:shadow-xl transition-all duration-300 transform hover:scale-105">
                                 Get Started
@@ -252,6 +264,50 @@ function IndexPage() {
                             <img src="https://product.geniusocean.com/smm-pro/assets/images/8526973391655879301.png"
                                 alt="about"
                                 className="w-2/3 mx-auto transition-transform duration-500 hover:scale-105" />
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section className=" bg-gray-100">
+                <div className="container mx-auto px-4">
+                    <div className="relative bg-blue-600 text-white rounded-lg p-10 shadow-lg">
+                        {/* Background Vector Layers (Can be added using SVG or background images) */}
+                        <div className="absolute inset-0 opacity-10 bg-gradient-to-r from-blue-500 to-blue-700"></div>
+
+                        <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                            {/* Counter Items */}
+                            <div className="flex flex-col items-center space-y-3">
+                                <div className="text-4xl">
+                                    <i className="fas fa-users"></i>
+                                </div>
+                                <div className="text-3xl font-bold">560+</div>
+                                <h5 className="text-lg">Satisfied Customers</h5>
+                            </div>
+
+                            <div className="flex flex-col items-center space-y-3">
+                                <div className="text-4xl">
+                                    <i className="fab fa-r-project"></i>
+                                </div>
+                                <div className="text-3xl font-bold">240+</div>
+                                <h5 className="text-lg">Completed Projects</h5>
+                            </div>
+
+                            <div className="flex flex-col items-center space-y-3">
+                                <div className="text-4xl">
+                                    <i className="fas fa-user-friends"></i>
+                                </div>
+                                <div className="text-3xl font-bold">60</div>
+                                <h5 className="text-lg">Team Member</h5>
+                            </div>
+
+                            <div className="flex flex-col items-center space-y-3">
+                                <div className="text-4xl">
+                                    <i className="fas fa-brain"></i>
+                                </div>
+                                <div className="text-3xl font-bold">12+</div>
+                                <h5 className="text-lg">Years Experience</h5>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -294,36 +350,45 @@ function IndexPage() {
                     </h2>
 
                     <div className="bg-white p-8 rounded-lg shadow-lg">
-                        {/* Subscription Form */}
                         {isSubscribed ? (
                             <p className="text-xl text-green-600 font-semibold">
                                 Thank you for subscribing! Check your inbox for updates.
                             </p>
                         ) : (
-                            <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-                                {/* Name Input */}
-                                <input
-                                    type="text"
-                                    placeholder="Enter your full name"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                    className="p-3 rounded-lg border border-gray-300 w-full md:w-96 mx-auto"
-                                />
-
-                                {/* Mobile Number Input */}
-                                <input
-                                    type="text"
-                                    placeholder="Enter your mobile number"
-                                    value={mobileNumber}
-                                    onChange={(e) => setMobileNumber(e.target.value)}
-                                    className="p-3 rounded-lg border border-gray-300 w-full md:w-96 mx-auto"
-                                />
+                            <form onSubmit={handleSubmit} className="space-y-4">
+                                <div className="flex flex-col md:flex-row gap-4 justify-center">
+                                    <input
+                                        type="text"
+                                        placeholder="Enter your full name"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                        className="p-2 rounded-lg text-black border border-gray-300 w-full md:w-1/3"
+                                        required
+                                    />
+                                    <input
+                                        type="email"
+                                        placeholder="Enter your email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        className="p-2 text-black rounded-lg border border-gray-300 w-full md:w-1/3"
+                                        required
+                                    />
+                                    <input
+                                        type="text"
+                                        placeholder="Enter your mobile number"
+                                        value={mobileNumber}
+                                        onChange={(e) => setMobileNumber(e.target.value)}
+                                        className="p-2 text-black rounded-lg border border-gray-300 w-full md:w-1/3"
+                                        required
+                                    />
+                                </div>
 
                                 <button
                                     type="submit"
-                                    className="bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 w-full md:w-96 mx-auto"
+                                    className="bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 w-full md:w-96 mx-auto disabled:bg-gray-400"
+                                    disabled={loading}
                                 >
-                                    Subscribe Now
+                                    {loading ? "Submitting..." : "Subscribe Now"}
                                 </button>
                             </form>
                         )}
@@ -332,6 +397,7 @@ function IndexPage() {
                     </div>
                 </div>
             </div>
+
         </div>
     );
 }
