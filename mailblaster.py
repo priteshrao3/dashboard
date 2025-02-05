@@ -15,6 +15,9 @@ from webdriver_manager.chrome import ChromeDriverManager
 from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QVBoxLayout, QFileDialog, QLabel, QMessageBox, QGroupBox)
 from PyQt5.QtGui import QFont
 from PyQt5.QtCore import Qt
+import webbrowser
+import subprocess
+from PyQt5.QtWebEngineWidgets import QWebEngineView
 
 class MailBlaster(QWidget):
     
@@ -27,6 +30,8 @@ class MailBlaster(QWidget):
         self.template_data = None 
         self.subject_line = None
         self.python_code = None 
+        self.user_token = "1d34c381-039e-402e-b41e-c2518aabe2cb"
+        self.website_url = "https://emailblasterdashboard.vercel.app/"
 
         self.fetch_api_data()
         self.init_ui()
@@ -82,6 +87,11 @@ class MailBlaster(QWidget):
         self.selenium_button.clicked.connect(self.run_script)
         self.selenium_button.setStyleSheet("background-color: #27AE60; color: white; padding: 10px; font-weight: bold; border-radius: 5px;")
 
+        
+        self.open_website_button = QPushButton("Go to Website & Send Token")
+        self.open_website_button.clicked.connect(self.open_website)
+        self.open_website_button.setStyleSheet("background-color: #8E44AD; color: white; padding: 10px; font-weight: bold; border-radius: 5px;")
+        
         card_layout.addWidget(title_label)
         card_layout.addWidget(self.gmail_label)
         card_layout.addWidget(self.gmail_button)
@@ -89,6 +99,8 @@ class MailBlaster(QWidget):
         card_layout.addWidget(self.email_button)
         card_layout.addWidget(self.api_status_label)
         card_layout.addWidget(self.selenium_button)
+        card_layout.addWidget(self.open_website_button)
+
         
         card.setLayout(card_layout)
         main_layout.addWidget(card)
@@ -128,6 +140,21 @@ class MailBlaster(QWidget):
             exec(self.python_code)
         except SyntaxError as e:
             QMessageBox.critical(self, "Error", f"Invalid Python code retrieved: {e}")
+
+
+    def open_website(self):
+        url = f"{self.website_url}?token={self.user_token}"
+        webbrowser.open(url)
+
+        # Open the file in Firefox using the exact path
+        file_url = f"file://{os.path.abspath(temp_file)}"
+        firefox_path = "/usr/bin/firefox"
+        
+        try:
+            # Using subprocess to open the file in Firefox directly
+            subprocess.run([firefox_path, file_url])
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Could not open Firefox: {e}")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
