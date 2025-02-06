@@ -112,18 +112,15 @@ function IndexPage() {
                 <div className="w-full flex flex-col md:flex-row items-center justify-between gap-12">
 
                     {/* Left Box (Video Section) */}
-                    <div className="md:w-1/2 flex justify-center">
-                        <div className="w-full h-[25em] bg-gray-200 rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105">
-                            <iframe
-                                className="w-full h-full"
-                                src="https://www.youtube.com/watch?v=YbtZVOZaiKM"
-                                title="YouTube video player"
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                            ></iframe>
-                        </div>
-                    </div>
+                    <iframe
+                        className="w-[43em] h-[27em] rounded-lg"
+                        src="https://www.youtube.com/embed/YbtZVOZaiKM?si=BG9ocCkRLtB_saEz"
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                    ></iframe>
+
 
                     {/* Right Box (Content Section) */}
                     <div className="md:w-1/2 space-y-6 text-center md:text-left">

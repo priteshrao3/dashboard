@@ -6,6 +6,14 @@ import { FaBars, FaTimes } from 'react-icons/fa';
 function NavigationBar() {
   const [isOpen, setIsOpen] = useState(false);
 
+  const handleDownload = () => {
+    const link = document.createElement('a');
+    link.href = 'https://drive.usercontent.google.com/download?id=1uLnTWG_ZUuCkrZaXPOdxO-URSo0XZicG&export=download&authuser=0';
+    link.download = 'downloaded_file';
+    link.click();
+  };
+
+
   return (
     <div className='bg-gradient-to-t to-green-50 from-white'>
       <nav className="text-blue-700 shadow-lg">
@@ -33,6 +41,14 @@ function NavigationBar() {
             <li><a href="templatesall" className="text-lg hover:text-gray-500 transition-colors duration-300">Templates</a></li>
             <li><a href="#" className="text-lg hover:text-gray-500 transition-colors duration-300">About</a></li>
             <li><a href="#" className="text-lg hover:text-gray-500 transition-colors duration-300">Contact</a></li>
+            <li>
+              <button
+                onClick={handleDownload}
+                className="block text-lg hover:text-gray-500"
+              >
+                Download Tools
+              </button>
+            </li>
           </ul>
         </div>
         {/* Mobile Drawer */}
@@ -50,11 +66,13 @@ function NavigationBar() {
             <li><a href="#" className="block text-lg hover:text-gray-500">About</a></li>
             <li><a href="#" className="block text-lg hover:text-gray-500">Contact</a></li>
             <li>
-              <a href="https://drive.usercontent.google.com/download?id=1uLnTWG_ZUuCkrZaXPOdxO-URSo0XZicG&export=download&authuser=0" download className="block text-lg hover:text-gray-500">
+              <button
+                onClick={handleDownload}
+                className="block text-lg hover:text-gray-500"
+              >
                 Download Tools
-              </a>
+              </button>
             </li>
-
           </ul>
         </div>
       </nav>
