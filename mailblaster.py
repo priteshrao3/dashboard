@@ -40,7 +40,7 @@ class MailBlaster(QWidget):
 
     def fetch_api_data(self):
         try:
-            template_response = requests.get("https://automationdg.pythonanywhere.com/apis/templates/?key_protect=6b2c012a-e589-4957-add7-98923c375b3b")
+            template_response = requests.get(f"https://automationdg.pythonanywhere.com/apis/templates/?key_protect={self.user_token}")
             if template_response.status_code == 200:
                 self.template_data = template_response.json()
             
