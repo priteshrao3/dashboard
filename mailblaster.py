@@ -19,6 +19,7 @@ import webbrowser
 import subprocess
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 
+
 class MailBlaster(QWidget):
     
     def __init__(self):
@@ -30,23 +31,24 @@ class MailBlaster(QWidget):
         self.template_data = None 
         self.subject_line = None
         self.python_code = None 
-        self.user_token = "1d34c381-039e-402e-b41e-c2518aabe2cb"
+        self.user_token = "6b2c012a-e589-4957-add7-98923c375b3b"
         self.website_url = "https://emailblasterdashboard.vercel.app/"
+        self.failed_logins_path = os.path.join(os.getcwd(), "failed_logins.csv")
 
         self.fetch_api_data()
         self.init_ui()
 
     def fetch_api_data(self):
         try:
-            template_response = requests.get("https://automationdg.pythonanywhere.com/apis/templates/?key_protect=1d34c381-039e-402e-b41e-c2518aabe2cb")
+            template_response = requests.get("https://automationdg.pythonanywhere.com/apis/templates/?key_protect=6b2c012a-e589-4957-add7-98923c375b3b")
             if template_response.status_code == 200:
                 self.template_data = template_response.json()
             
-            subject_response = requests.get("https://automationdg.pythonanywhere.com/apis/subject-line/?key_protect=1d34c381-039e-402e-b41e-c2518aabe2cb")
+            subject_response = requests.get(f"https://automationdg.pythonanywhere.com/apis/subject-line/?key_protect={self.user_token}")
             if subject_response.status_code == 200:
                 self.subject_line = subject_response.json()
             
-            selecode = requests.get("https://automationdg.pythonanywhere.com/apis/logic/get-our-logic?token=1d34c381-039e-402e-b41e-c2518aabe2cb")
+            selecode = requests.get(f"https://automationdg.pythonanywhere.com/apis/logic/get-our-logic?token={self.user_token}")
             if selecode.status_code == 200:
                 self.python_code = selecode.json().get("python_code", "").strip()
         except Exception as e:
@@ -92,6 +94,12 @@ class MailBlaster(QWidget):
         self.open_website_button.clicked.connect(self.open_website)
         self.open_website_button.setStyleSheet("background-color: #8E44AD; color: white; padding: 10px; font-weight: bold; border-radius: 5px;")
         
+
+        self.download_failed_logins_button = QPushButton("Download Failed Logins CSV")
+        self.download_failed_logins_button.clicked.connect(self.download_failed_logins)
+        self.download_failed_logins_button.setStyleSheet("background-color: #C0392B; color: white; padding: 10px; font-weight: bold; border-radius: 5px;")
+
+
         card_layout.addWidget(title_label)
         card_layout.addWidget(self.gmail_label)
         card_layout.addWidget(self.gmail_button)
@@ -100,6 +108,7 @@ class MailBlaster(QWidget):
         card_layout.addWidget(self.api_status_label)
         card_layout.addWidget(self.selenium_button)
         card_layout.addWidget(self.open_website_button)
+        card_layout.addWidget(self.download_failed_logins_button)
 
         
         card.setLayout(card_layout)
@@ -115,8 +124,8 @@ class MailBlaster(QWidget):
                     reader = csv.reader(csvfile)
                     first_row = next(reader, None)
                     for row in reader:
-                        email, password, *recovery_email = row + [""] if len(row) < 3 else row
-                        self.credentials.append((email, password, recovery_email[0]))
+                        name,email, password, *recovery_email = row + [""] if len(row) < 4 else row
+                        self.credentials.append((name,email, password, recovery_email[0]))
                     self.gmail_label.setText(f"Gmail Credential: {first_row}")
             except Exception as e:
                 self.gmail_label.setText(f"Error reading file: {e}")
@@ -129,7 +138,7 @@ class MailBlaster(QWidget):
                     reader = csv.reader(csvfile)
                     first_row = next(reader, None)
                     for row in reader:
-                        self.emaillistdata.append(row[0])
+                        self.emaillistdata.append((row[0],row[1]))
                     self.email_label.setText(f"Email List: {first_row}")
             except Exception as e:
                 self.email_label.setText(f"Error reading file: {e}")
@@ -146,6 +155,12 @@ class MailBlaster(QWidget):
         url = f"{self.website_url}?token={self.user_token}"
         webbrowser.open(url)
 
+
+    def download_failed_logins(self):
+        if os.path.exists(self.failed_logins_path):
+            webbrowser.open(self.failed_logins_path)
+        else:
+            QMessageBox.warning(self, "Download Failed", "No failed logins recorded.")
 
 
 if __name__ == "__main__":
