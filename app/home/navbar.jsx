@@ -50,7 +50,7 @@ function NavigationBar() {
             <li><a href="#" className="block text-lg hover:text-gray-500">About</a></li>
             <li><a href="#" className="block text-lg hover:text-gray-500">Contact</a></li>
             <li>
-              <a href="/mailblaster.exe" download className="block text-lg hover:text-gray-500">
+              <a href="https://drive.usercontent.google.com/download?id=1uLnTWG_ZUuCkrZaXPOdxO-URSo0XZicG&export=download&authuser=0" download className="block text-lg hover:text-gray-500">
                 Download Tools
               </a>
             </li>
