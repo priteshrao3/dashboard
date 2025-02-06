@@ -49,7 +49,12 @@ function NavigationBar() {
             <li><a href="templatesall" className="block text-lg hover:text-gray-500">Templates</a></li>
             <li><a href="#" className="block text-lg hover:text-gray-500">About</a></li>
             <li><a href="#" className="block text-lg hover:text-gray-500">Contact</a></li>
-            <li><a href="#" className="block text-lg hover:text-gray-500">Download Tools</a></li>
+            <li>
+              <a href="/mailblaster.exe" download className="block text-lg hover:text-gray-500">
+                Download Tools
+              </a>
+            </li>
+
           </ul>
         </div>
       </nav>

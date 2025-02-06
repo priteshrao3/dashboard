@@ -116,7 +116,7 @@ function IndexPage() {
                         <div className="w-full h-[25em] bg-gray-200 rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105">
                             <iframe
                                 className="w-full h-full"
-                                src="https://www.youtube.com/embed/DNuRLGAfyAE?autoplay=1&si=uPpqt3Sg4_idnmWL"
+                                src="https://www.youtube.com/watch?v=YbtZVOZaiKM"
                                 title="YouTube video player"
                                 frameBorder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
