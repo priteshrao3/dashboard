@@ -48,7 +48,7 @@ class MailBlaster(QWidget):
             if subject_response.status_code == 200:
                 self.subject_line = subject_response.json()
             
-            selecode = requests.get(f"https://automationdg.pythonanywhere.com/apis/logic/get-our-logic?token={self.user_token}")
+            selecode = requests.get(f"https://automationdg.pythonanywhere.com/apis/logic/2/?get-our-logic/?token={self.user_token}")
             if selecode.status_code == 200:
                 self.python_code = selecode.json().get("python_code", "").strip()
         except Exception as e:

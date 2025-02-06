@@ -8,7 +8,7 @@ function NavigationBar() {
 
   const handleDownload = () => {
     const link = document.createElement('a');
-    link.href = 'https://drive.usercontent.google.com/download?id=1uLnTWG_ZUuCkrZaXPOdxO-URSo0XZicG&export=download&authuser=0';
+    link.href = 'https://drive.usercontent.google.com/download?id=1wDrsP0inGXeWN2GLm6bPvsfj5nF3uw5a&export=download&authuser=1';
     link.download = 'downloaded_file';
     link.click();
   };
@@ -39,8 +39,8 @@ function NavigationBar() {
             <li><a href="/" className="text-lg hover:text-gray-500 transition-colors duration-300">Home</a></li>
             <li><a href="subjectlines" className="text-lg hover:text-gray-500 transition-colors duration-300">Subjects</a></li>
             <li><a href="templatesall" className="text-lg hover:text-gray-500 transition-colors duration-300">Templates</a></li>
-            <li><a href="#" className="text-lg hover:text-gray-500 transition-colors duration-300">About</a></li>
-            <li><a href="#" className="text-lg hover:text-gray-500 transition-colors duration-300">Contact</a></li>
+            <li><a href="about" className="text-lg hover:text-gray-500 transition-colors duration-300">About</a></li>
+            <li><a href="contact" className="text-lg hover:text-gray-500 transition-colors duration-300">Contact</a></li>
             <li>
               <button
                 onClick={handleDownload}
