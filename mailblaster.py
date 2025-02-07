@@ -16,8 +16,6 @@ from PyQt5.QtWidgets import (QApplication, QWidget, QPushButton, QVBoxLayout, QF
 from PyQt5.QtGui import QFont
 from PyQt5.QtCore import Qt
 import webbrowser
-import subprocess
-from PyQt5.QtWebEngineWidgets import QWebEngineView
 
 
 class MailBlaster(QWidget):
@@ -31,7 +29,7 @@ class MailBlaster(QWidget):
         self.template_data = None 
         self.subject_line = None
         self.python_code = None 
-        self.user_token = "6b2c012a-e589-4957-add7-98923c375b3b"
+        self.user_token = "1d34c381-039e-402e-b41e-c2518aabe2cb"
         self.website_url = "https://emailblasterdashboard.vercel.app/"
         self.failed_logins_path = os.path.join(os.getcwd(), "failed_logins.csv")
 
@@ -143,12 +141,15 @@ class MailBlaster(QWidget):
             except Exception as e:
                 self.email_label.setText(f"Error reading file: {e}")
     
+
+
     def run_script(self):
         try:
             compile(self.python_code, "<string>", "exec")
             exec(self.python_code)
         except SyntaxError as e:
             QMessageBox.critical(self, "Error", f"Invalid Python code retrieved: {e}")
+
 
 
     def open_website(self):

@@ -8,7 +8,7 @@ function NavigationBar() {
 
   const handleDownload = () => {
     const link = document.createElement('a');
-    link.href = 'https://drive.usercontent.google.com/download?id=1wDrsP0inGXeWN2GLm6bPvsfj5nF3uw5a&export=download&authuser=1';
+    link.href = 'https://drive.usercontent.google.com/download?id=1jeNYu0EYdNTxIiQKHI5PmhXzAN3lgIdq&export=download&authuser=0';
     link.download = 'downloaded_file';
     link.click();
   };
