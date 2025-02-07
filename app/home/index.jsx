@@ -3,6 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { FaWallet } from "react-icons/fa";
 import axios from "axios";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Navigation, A11y } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+
 function IndexPage() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -11,7 +17,6 @@ function IndexPage() {
     const [errorMessage, setErrorMessage] = useState("");
     const [loading, setLoading] = useState(false);
 
-    // Extract token from URL and store it in localStorage
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get("token");
@@ -54,7 +59,7 @@ function IndexPage() {
 
             if (response.status === 201) {
                 setIsSubscribed(true);
-                setName(""); // Reset form
+                setName("");
                 setEmail("");
                 setMobileNumber("");
             } else {
@@ -69,9 +74,20 @@ function IndexPage() {
     };
 
 
+    const tutorialVideos = [
+        { title: "Step 1: Download, Install, and Open the App", url: "https://www.youtube.com/embed/YbtZVOZaiKM" },
+        { title: "Step 2: Dashboard Overview & Uploading Subject Lines CSV", url: "https://www.youtube.com/embed/YbtZVOZaiKM" },
+        { title: "Step 3: Creating and Editing Templates", url: "https://www.youtube.com/embed/YbtZVOZaiKM" },
+        { title: "Step 4: Creating Credential CSV File", url: "https://www.youtube.com/embed/YbtZVOZaiKM" },
+        { title: "Step 5: Creating Client Email List CSV File", url: "https://www.youtube.com/embed/YbtZVOZaiKM" },
+        { title: "Step 6: Sending Emails with Credentials & Email List", url: "https://www.youtube.com/embed/YbtZVOZaiKM" },
+    ];
+
+
+
     return (
         <div className="bg-gray-50">
-            <div className="relative overflow-hidden bg-gradient-to-r from-blue-500 to-indigo-600 md:py-16 py-5 text-white">
+            <div className="relative overflow-hidden bg-gradient-to-r from-blue-500 to-indigo-600 md:py-2 py-2  text-white">
                 <div className="px-2 md:px-20">
                     <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-8">
 
@@ -91,7 +107,7 @@ function IndexPage() {
                                     onClick={() => {
                                         document.getElementById('Subscription')?.scrollIntoView({ behavior: 'smooth' });
                                     }}
-                                    className="inline-flex items-center md:px-20 px-32 py-2 bg-white text-blue-600 font-bold rounded-full shadow-lg hover:bg-gray-200 transition-all duration-300 transform hover:scale-105"
+                                    className="inline-flex items-center md:px-20 px-28 py-2 bg-white text-blue-600 font-bold rounded-full shadow-lg hover:bg-gray-200 transition-all duration-300 transform hover:scale-105"
                                 >
                                     Get Started
                                     <span className="ml-3 text-lg sm:text-xl">
@@ -113,6 +129,7 @@ function IndexPage() {
                     </div>
                 </div>
             </div>
+
 
 
             <div className="md:py-10 py-5 flex flex-col items-center bg-white">
@@ -146,7 +163,7 @@ function IndexPage() {
                         <div className="flex justify-center md:justify-start">
                             <button
                                 onClick={() => document.getElementById('Subscription')?.scrollIntoView({ behavior: 'smooth' })}
-                                className="bg-blue-600 text-white font-semibold md:px-20 px-32 py-2 rounded-full shadow-md hover:bg-blue-700 hover:scale-105 transition-all duration-300">
+                                className="bg-blue-600 text-white font-semibold md:px-20 px-28 py-2 rounded-full shadow-md hover:bg-blue-700 hover:scale-105 transition-all duration-300">
                                 Start Free Trial
                             </button>
                         </div>
@@ -202,6 +219,47 @@ function IndexPage() {
                     </div>
                 </div>
             </div>
+
+
+            <div className="py-10 flex flex-col items-center bg-white md:px-20 px-3">
+                <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-6 text-center">
+                    Mail Blaster Step-by-Step Guide
+                </h1>
+                <Swiper
+                    modules={[Pagination, Navigation, A11y]}
+                    pagination={{ clickable: true }}
+                    navigation={{ nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" }}
+                    grabCursor={true}
+                    spaceBetween={20}
+                    slidesPerView={1}
+                    breakpoints={{
+                        640: { slidesPerView: 1 },
+                        768: { slidesPerView: 2 },
+                        1024: { slidesPerView: 3 }
+                    }}
+                    className="w-full px-4 md:px-20"
+                >
+                    {tutorialVideos.map((video, index) => (
+                        <SwiperSlide key={index} className="flex flex-col items-center cursor-grab">
+                            <h2 className="text-xl font-semibold text-gray-800 text-center mb-2">
+                                {video.title}
+                            </h2>
+                            <iframe
+                                className="w-full h-56 sm:h-64 md:h-72 rounded-lg"
+                                src={video.url}
+                                title={video.title}
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                            ></iframe>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+                {/* Navigation Buttons */}
+                <div className="swiper-button-prev !text-gray-900 !font-bold"></div>
+                <div className="swiper-button-next !text-gray-900 !font-bold"></div>
+            </div>
+
 
 
             <section className="bg-gray-100 py-16">
@@ -434,8 +492,8 @@ function IndexPage() {
                 </div>
             </div>
 
-            <section className="bg-gradient-to-r from-blue-50 to-purple-50 py-12">
-                <div className="px-14 text-center">
+            <section className="bg-gradient-to-r from-blue-50 to-purple-50 md:py-12">
+                <div className="md:px-14 px-4 text-center">
                     <h2 className="text-4xl font-extrabold text-gray-900 mb-6">Our Story</h2>
                     <p className="text-gray-700 text-lg leading-relaxed mb-8">
                         At <span className="font-semibold text-blue-600">Email Blaster</span>, we are passionate about providing businesses with the tools they need to supercharge their email marketing campaigns. Our journey started with a simple idea: to make email marketing accessible, effective, and automated for everyone. Whether you're a small startup or a large enterprise, our platform is designed to streamline your communication process, increase engagement, and drive conversions.

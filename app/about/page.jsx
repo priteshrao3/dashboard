@@ -15,7 +15,7 @@ const stagger = {
 
 function Aboutpage() {
   return (
-    <div className="bg-gradient-to-b from-gray-50 to-white py-16 px-6 md:px-16">
+    <div className="bg-gradient-to-b from-gray-50 to-white md:py-16 py-5 px-6 md:px-16">
       {/* Header Section */}
       <motion.div
         className="text-center"
@@ -82,7 +82,7 @@ function Aboutpage() {
       </div>
 
       {/* Our Values Section */}
-      <motion.div className="mt-16 bg-gradient-to-r from-blue-50 to-blue-100 py-12" initial="hidden" animate="visible" variants={stagger}>
+      <motion.div className="mt-16 bg-white md:py-12" initial="hidden" animate="visible" variants={stagger}>
         <div className="text-center">
           <motion.h3 className="text-3xl font-semibold text-gray-900 mb-6" variants={fadeInUp}>
             Our Core Values

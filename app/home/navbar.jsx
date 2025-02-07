@@ -13,10 +13,9 @@ function NavigationBar() {
     link.click();
   };
 
-
   return (
-    <div className='bg-gradient-to-t to-green-50 from-white'>
-      <nav className="text-blue-700 shadow-lg">
+    <div className="bg-gradient-to-t to-green-50 from-white">
+      <nav className="text-blue-700 shadow-lg fixed top-0 left-0 w-full z-50 bg-white">
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
           {/* Mobile Menu Button on Left */}
           <div className="md:hidden">
@@ -52,7 +51,7 @@ function NavigationBar() {
           </ul>
         </div>
         {/* Mobile Drawer */}
-        <div className={`md:hidden fixed top-0 left-0 w-64 h-full bg-white shadow-lg transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out`}>
+        <div className={`md:hidden fixed top-0 left-0 w-64 h-full bg-white shadow-lg z-50 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out`}>
           <div className="p-5 flex justify-between">
             <span className="text-xl font-bold">Menu</span>
             <button onClick={() => setIsOpen(false)} className="text-2xl">
@@ -63,8 +62,8 @@ function NavigationBar() {
             <li><a href="/" className="block text-lg hover:text-gray-500">Home</a></li>
             <li><a href="subjectlines" className="block text-lg hover:text-gray-500">Subjects</a></li>
             <li><a href="templatesall" className="block text-lg hover:text-gray-500">Templates</a></li>
-            <li><a href="#" className="block text-lg hover:text-gray-500">About</a></li>
-            <li><a href="#" className="block text-lg hover:text-gray-500">Contact</a></li>
+            <li><a href="about" className="block text-lg hover:text-gray-500">About</a></li>
+            <li><a href="contact" className="block text-lg hover:text-gray-500">Contact</a></li>
             <li>
               <button
                 onClick={handleDownload}
@@ -76,6 +75,8 @@ function NavigationBar() {
           </ul>
         </div>
       </nav>
+      {/* Add padding to prevent content from being hidden behind navbar */}
+      <div className="md:pt-16 pt-[4em]"></div>
     </div>
   );
 }

@@ -62,7 +62,7 @@ const SubjectLinePage = () => {
   const currentItems = subjects.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
-    <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-lg md:p-8 p-2 md:mt-10">
+    <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-lg md:p-8 p-2 md:mt-10 mt-5">
       <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Manage Subject Lines</h1>
       <UploadSubject />
       {message && <div className="text-center text-red-600 font-semibold mb-4">{message}</div>}
