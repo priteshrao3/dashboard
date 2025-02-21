@@ -38,8 +38,7 @@ function NavigationBar() {
             <li><a href="/" className="text-lg hover:text-gray-500 transition-colors duration-300">Home</a></li>
             <li><a href="subjectlines" className="text-lg hover:text-gray-500 transition-colors duration-300">Subjects</a></li>
             <li><a href="templatesall" className="text-lg hover:text-gray-500 transition-colors duration-300">Templates</a></li>
-            <li><a href="about" className="text-lg hover:text-gray-500 transition-colors duration-300">About</a></li>
-            <li><a href="contact" className="text-lg hover:text-gray-500 transition-colors duration-300">Contact</a></li>
+            <li><a href="subscription" className="text-lg hover:text-gray-500 transition-colors duration-300">Get Subscription</a></li>
             <li>
               <button
                 onClick={handleDownload}
@@ -48,6 +47,7 @@ function NavigationBar() {
                 Download Tools
               </button>
             </li>
+            <li><a href="contact" className="text-lg hover:text-gray-500 transition-colors duration-300">Contact</a></li>
           </ul>
         </div>
         {/* Mobile Drawer */}

@@ -12,62 +12,65 @@ export default function FooterPage() {
     ];
 
     return (
-        <footer className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white pt-16 pb-8">
+        <footer className="bg-gradient-to-br from-indigo-600 to-blue-700 text-white py-16">
             <div className="container mx-auto px-6">
-                {/* Grid Layout */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-16">
-
-                    {/* Logo & Branding */}
-                    <div className="text-center md:text-left pt-10">
-                        <h1 className="text-4xl font-extrabold text-white">Mail Blaster</h1>
-                        <p className="text-sm text-gray-200 mt-2 max-w-xs mx-auto md:mx-0">
-                            Simplify your email marketing with automation and boost your outreach.
+                {/* Footer Grid Layout */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 text-center sm:text-left">
+                    
+                    {/* Brand Logo & Tagline */}
+                    <div>
+                        <h1 className="text-4xl font-extrabold">Mail Blaster</h1>
+                        <p className="text-gray-200 text-sm mt-3 leading-relaxed max-w-xs mx-auto sm:mx-0">
+                            Elevate your email marketing with powerful automation and precision targeting.
                         </p>
                     </div>
 
-                    {/* Menu Links */}
+                    {/* Quick Links */}
                     <div>
-                        <h5 className="text-lg font-semibold mb-4 border-b-2 pb-2 border-white">Menu</h5>
-                        <ul className="space-y-2">
-                            <li><Link href="/" className="hover:text-blue-400 transition duration-300">Home</Link></li>
-                            <li><Link href="/about" className="hover:text-blue-400 transition duration-300">About</Link></li>
-                            <li><Link href="/contact" className="hover:text-blue-400 transition duration-300">Contact</Link></li>
+                        <h5 className="text-lg font-semibold mb-4 border-b-2 pb-2 border-white">Quick Links</h5>
+                        <ul className="space-y-3">
+                            <li><Link href="/" className="hover:text-gray-300 transition duration-300">Home</Link></li>
+                            <li><Link href="/about" className="hover:text-gray-300 transition duration-300">About</Link></li>
+                            <li><Link href="/contact" className="hover:text-gray-300 transition duration-300">Contact</Link></li>
                         </ul>
                     </div>
 
-                    {/* Pages Links */}
+                    {/* Resources */}
                     <div>
-                        <h5 className="text-lg font-semibold mb-4 border-b-2 pb-2 border-white">Pages</h5>
-                        <ul className="space-y-2">
-                            <li><Link href="subjectlines" className="hover:text-blue-400 transition duration-300">Subjects</Link></li>
-                            <li><Link href="templatesall" className="hover:text-blue-400 transition duration-300">Templates</Link></li>
+                        <h5 className="text-lg font-semibold mb-4 border-b-2 pb-2 border-white">Resources</h5>
+                        <ul className="space-y-3">
+                            <li><Link href="/subjectlines" className="hover:text-gray-300 transition duration-300">Subject Lines</Link></li>
+                            <li><Link href="/templatesall" className="hover:text-gray-300 transition duration-300">Templates</Link></li>
                         </ul>
                     </div>
+
+                    {/* Stay Connected */}
+                    <div>
+                        <h5 className="text-lg font-semibold mb-4 border-b-2 pb-2 border-white">Stay Connected</h5>
+                        <p className="text-sm text-gray-300 mb-4">Follow us on social media</p>
+                        <div className="flex justify-center sm:justify-start space-x-4">
+                            {socialLinks.map((social, index) => (
+                                <a
+                                    key={index}
+                                    href={social.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="p-3 rounded-full bg-white text-blue-900 hover:bg-blue-500 hover:text-white transition-all duration-300 shadow-md transform hover:scale-110"
+                                >
+                                    {social.icon}
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+
                 </div>
 
-                {/* Social Media & Copyright */}
-                <div className="mt-10 border-t border-white pt-6 flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-6">
-
-                    {/* Social Icons */}
-                    <div className="flex space-x-6">
-                        {socialLinks.map((social, index) => (
-                            <a
-                                key={index}
-                                href={social.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="p-2 rounded-full bg-white text-blue-900 hover:bg-gradient-to-r from-blue-400 to-blue-600 hover:text-white transition duration-300 shadow-lg transform hover:scale-105"
-                            >
-                                {social.icon}
-                            </a>
-                        ))}
-                    </div>
-
-                    {/* Copyright Text */}
-                    <p className="text-sm text-gray-200 text-center mt-6 md:mt-0">
-                        © {new Date().getFullYear()} All Rights Reserved by
-                        <Link href="/" className="font-semibold hover:text-blue-400 transition duration-300 ml-1">PRWebTechno</Link>
+                {/* Bottom Section */}
+                <div className="mt-10 border-t border-gray-400 pt-6 flex flex-col sm:flex-row justify-between items-center text-sm text-gray-300">
+                    <p>© {new Date().getFullYear()} All Rights Reserved by 
+                        <Link href="/" className="font-semibold hover:text-white transition duration-300 ml-1">PRWebTechno</Link>
                     </p>
+                    <p className="mt-4 sm:mt-0">Designed with ❤️ by PRWebTechno</p>
                 </div>
             </div>
         </footer>

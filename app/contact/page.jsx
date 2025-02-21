@@ -28,7 +28,7 @@ function Contactpage() {
                 setEmail("");
                 setMobileNumber("");
             } else {
-                throw new Error("Subscription failed. Please try again.");
+                throw new Error("inquiry failed. Please try again.");
             }
         } catch (error) {
             setErrorMessage(error.response?.data?.message || "An error occurred. Please try again.");
@@ -40,9 +40,10 @@ function Contactpage() {
     return (
         <div className="w-full bg-gradient-to-br from-blue-50 to-purple-50 md:py-10 py-12" id="Subscription">
             <div className="max-w-4xl mx-auto text-center px-4">
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-8">
-                    Start Your Subscription Today and Unlock All <span className="text-blue-600">Premium Features</span> of MailBlaster
-                </h2>
+                <h3 className="text-4xl font-bold text-gray-800 mb-4">Contact & Support</h3>
+                <p className="text-gray-600 text-lg mb-8">
+                    If you have any queries or need assistance, feel free to reach out to us. We're here to help!
+                </p>
 
                 <div className="bg-white p-8 rounded-2xl shadow-2xl transform transition-all duration-300 hover:shadow-3xl">
                     {isSubscribed ? (
@@ -51,7 +52,7 @@ function Contactpage() {
                                 <i className="fas fa-check-circle"></i>
                             </div>
                             <p className="text-xl text-green-600 font-semibold">
-                                Thank you for subscribing! Check your inbox for updates.
+                                Thank you for inquiry! Check your inbox for updates.
                             </p>
                         </div>
                     ) : (
