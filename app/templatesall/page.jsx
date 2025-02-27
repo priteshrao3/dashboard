@@ -20,12 +20,12 @@ const TemplatesPage = () => {
       const storedAuthToken = localStorage.getItem('authToken');
       if (storedAuthToken) {
         setAuthToken(storedAuthToken);
-        fetchTemplates(storedAuthToken);
+        fetchTemplates(storedAuthToken, true);
       }
     }
   }, []);
 
-  const fetchTemplates = async (key) => {
+  const fetchTemplates = async (key, keepPage = false) => {
     setMessage('Fetching templates...');
     try {
       const response = await axios.get(
@@ -33,7 +33,9 @@ const TemplatesPage = () => {
       );
       setTemplates(response.data);
       setMessage(response.data.length ? '' : 'No templates found.');
-      setCurrentPage(1);
+      if (!keepPage) {
+        setCurrentPage(1);
+      }
     } catch (error) {
       setMessage('Error fetching templates.');
     }
@@ -51,7 +53,7 @@ const TemplatesPage = () => {
         key_protect: authToken,
       });
       setEditingTemplate(null);
-      fetchTemplates(authToken);
+      fetchTemplates(authToken, true); // Keeps the current page
     } catch (error) {
       setMessage('Failed to update template.');
     }
