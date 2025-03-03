@@ -14,9 +14,9 @@ function SubscriptionPage() {
   const [errorMessage, setErrorMessage] = useState('');
 
   const plans = [
-    { duration: '1 Month', emails: 30, price: 999 },
-    { duration: '6 Months', emails: 50, price: 4999 },
-    { duration: '1 Year', emails: '30 to 100 Customizable', price: 9999 },
+    { duration: '1 Month', emails: 30, price: 999, file: '/tools/mailblaster30.zip', paymentLink: 'https://razorpay.com/payment-link/plink_1Month' },
+    { duration: '6 Months', emails: 50, price: 4999, file: '/tools/mailblaster50.zip', paymentLink: 'https://razorpay.com/payment-link/plink_6Months' },
+    { duration: '1 Year', emails: '30 to 100 Customizable', price: 9999, file: '/tools/mailblaster80.zip', paymentLink: 'https://razorpay.com/payment-link/plink_1Year' },
   ];
 
   const handleChange = (e) => {
@@ -29,12 +29,28 @@ function SubscriptionPage() {
     try {
       const response = await axios.post(
         'https://automationdg.pythonanywhere.com/apis/register/',
-        formData
+        formData,
+        { headers: { 'Content-Type': 'application/json' } }
       );
-      alert(`Registration Successful! payment for ${selectedPlan?.duration} plan...`);
-      window.location.href = 'https://razorpay.com/payment-link/plink_PyEgtX0bxI7Q5B';
+      alert(`Registration Successful! Downloading ${selectedPlan?.duration} plan file...`);
+      
+      // Auto-download the file based on the selected subscription
+      const link = document.createElement('a');
+      link.href = selectedPlan?.file;
+      link.setAttribute('download', '');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      // Redirect to the corresponding payment page
+      window.location.href = selectedPlan?.paymentLink;
     } catch (error) {
-      setErrorMessage('Registration Failed. Please try again.');
+      console.error('Error Response:', error.response?.data || error.message);
+      if (error.response?.data?.error) {
+        setErrorMessage(error.response.data.error);
+      } else {
+        setErrorMessage('Registration Failed. Please try again.');
+      }
     }
   };
 
@@ -79,7 +95,7 @@ function SubscriptionPage() {
               type="text"
               name="username"
               placeholder="Enter Username"
-              className="w-full p-2 border  text-black rounded-md"
+              className="w-full p-2 border text-black rounded-md"
               onChange={handleChange}
               required
             />
